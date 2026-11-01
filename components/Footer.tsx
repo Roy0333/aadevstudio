@@ -67,50 +67,32 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="footer-middle flex items-start gap-[154px] max-xl:gap-12 max-lg:flex-col">
-              <div className="footer-contact flex shrink-0 flex-col gap-[27px]">
-                <h2 className="highlight self-start text-[20px] font-medium">
-                  Contact us:
-                </h2>
-                <address className="flex flex-col gap-5 whitespace-nowrap text-[18px] not-italic max-md:whitespace-normal">
-                  <p>
-                    Email:{" "}
-                    <a href={`mailto:${site.email}`}>{site.email}</a>
-                  </p>
-                  <p>
-                    Phone: <a href={`tel:${site.phone.href}`}>{site.phone.display}</a>
-                  </p>
-                  <p>
-                    Address: {site.address.street}
-                    <br />
-                    {site.address.city}, {site.address.region} {site.address.postalCode}
-                  </p>
-                </address>
-              </div>
-
-              <form
-                className="footer-subscribe flex gap-5 rounded-[14px] bg-dark-soft px-10 py-[58px] max-xl:flex-col max-lg:w-full max-md:px-5 max-md:py-8"
-                action="#"
-                method="post"
-              >
-                <label htmlFor="subscribe-email" className="sr-only">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="subscribe-email"
-                  name="email"
-                  required
-                  placeholder="Email"
-                  className="footer-subscribe-input w-[285px] rounded-[14px] border border-white bg-transparent px-[35px] py-[22px] text-[18px] text-white placeholder:text-white focus:border-purple focus:outline-none max-xl:w-full"
-                />
-                <button
-                  type="submit"
-                  className="btn btn-purple bg-[#BC13FE] text-white"
-                >
-                  Subscribe to news
-                </button>
-              </form>
+            {/* Contact details spread across the full width: three columns on desktop,
+                stacked (and centred on phones, like the row above) on smaller screens. */}
+            <div className="footer-contact flex flex-col gap-[27px] max-md:items-center max-md:text-center">
+              <h2 className="highlight self-start text-[20px] font-medium max-md:self-center">
+                Contact us:
+              </h2>
+              <address className="grid grid-cols-3 gap-10 text-[18px] leading-7 not-italic max-lg:grid-cols-1 max-lg:gap-5">
+                <p className="flex flex-col gap-1">
+                  <span className="opacity-60">Email</span>
+                  <a href={`mailto:${site.email}`} className="footer-link self-start max-md:self-center">
+                    {site.email}
+                  </a>
+                </p>
+                <p className="flex flex-col gap-1">
+                  <span className="opacity-60">Phone</span>
+                  <a href={`tel:${site.phone.href}`} className="footer-link self-start max-md:self-center">
+                    {site.phone.display}
+                  </a>
+                </p>
+                <p className="flex flex-col gap-1">
+                  <span className="opacity-60">Address</span>
+                  <span>
+                    {site.address.street}, {site.address.city}, {site.address.region} {site.address.postalCode}
+                  </span>
+                </p>
+              </address>
             </div>
           </div>
 

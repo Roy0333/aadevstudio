@@ -3,7 +3,6 @@
 /* ===================== Design tokens (Figma: AA DEV STUDIO) ===================== */
 @theme inline {
   --color-dark: #191a23; /* Figma "Dark" */
-  --color-dark-soft: #292a32; /* footer subscription block */
   --color-purple: #bc13fe; /* Figma "Green" (named Green in Figma, but it is purple) */
   --color-grey: #f3f3f3; /* Figma "Grey" */
   --font-sans: var(--font-space-grotesk);
