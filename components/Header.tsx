@@ -36,16 +36,16 @@ export default function Header() {
       <div className="site-container relative flex items-center justify-between">
         <Link
           href="/"
-          className="header-logo shrink-0 py-[10px]"
+          className="header-logo shrink-0"
           aria-label="AA DEV STUDIO home"
         >
           <Image
             src="/images/aa-logo.png"
             alt="AA DEV STUDIO"
             width={100}
-            height={75}
+            height={60}
             priority
-            className="h-[75px] w-auto"
+            className="h-[60px] w-auto"
           />
         </Link>
 
