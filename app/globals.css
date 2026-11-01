@@ -30,1597 +30,1731 @@ body {
   background: #ffffff;
   color: #000000;
   font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
+  @apply overflow-x-hidden;
 }
 
 @layer components {
-/* ===================== Container ===================== */
-/* Figma frame is 1440px wide with 100px side padding. */
-.site-container {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding-left: 100px;
-  padding-right: 100px;
-}
-
-/* ===================== Highlight label ===================== */
-/* Figma "Label": text on a coloured block, used for section and card headings. */
-/* The colour is a gradient sized by --hl-size so it can be wiped in (Services animates 0% → 100%). */
-.highlight {
-  --hl-color: var(--color-purple);
-  padding: 0 7px;
-  color: #000000;
-  background: linear-gradient(var(--hl-color), var(--hl-color)) no-repeat 0 0 / var(--hl-size, 100%) 100%;
-  border-radius: 7px;
-}
-
-.highlight.highlight-white {
-  --hl-color: #ffffff;
-}
-
-/* ===================== Buttons ===================== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 35px;
-  font-size: 20px;
-  line-height: 28px;
-  text-align: center;
-  white-space: nowrap;
-  color: #000000;
-  border: 1px solid var(--color-dark);
-  border-radius: 14px;
-  transition: all 0.3s ease-in-out;
-}
-
-.btn:hover {
-  color: #ffffff;
-  background-color: var(--color-dark);
-}
-
-.btn.btn-purple {
-  background-color: var(--color-purple);
-  border-color: var(--color-purple);
-}
-
-.btn.btn-purple:hover {
-  color: #000000;
-  background-color: #ffffff;
-  border-color: #ffffff;
-}
-
-.btn.btn-dark {
-  color: #ffffff;
-  background-color: var(--color-dark);
-}
-
-.btn.btn-dark:hover {
-  color: var(--color-dark);
-  background-color: #ffffff;
-}
-
-/* ===================== Header ===================== */
-/* Sticky bar. Margin + padding keep the Figma 60px offset at the top of the page
-   (45 + 15) without the bar changing height when it sticks, so nothing jumps. */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  margin-top: 45px;
-  padding: 15px 0;
-  transition: all 0.3s ease-in-out;
-}
-
-.site-header.is-sticky {
-  background-color: rgb(255 255 255 / 0.7);
-  -webkit-backdrop-filter: blur(12px);
-          backdrop-filter: blur(12px);
-}
-
-.nav-link {
-  font-size: 20px;
-  line-height: 28px;
-  white-space: nowrap;
-  transition: all 0.3s ease-in-out;
-}
-
-.nav-link:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-/* ===================== Banner ===================== */
-/* Illustration is a fixed-ratio stage (Figma frame 601 × 516). Each piece sets its
-   Figma x / y / width / height in px and is converted to % so the stage scales. */
-.banner-stage {
-  position: relative;
-  flex: 0 1 auto; /* basis must stay auto so the stacked (column) layout keeps the ratio */
-  width: 601px;
-  max-width: 100%;
-  aspect-ratio: 601 / 516;
-}
-
-.banner-piece {
-  position: absolute;
-  left: calc(var(--x) / 601 * 100%);
-  top: calc(var(--y) / 516 * 100%);
-  width: calc(var(--w) / 601 * 100%);
-  height: calc(var(--h) / 516 * 100%);
-}
-
-.banner-piece img,
-.banner-orbit-float,
-.banner-orbit-icon {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.banner-star-small { --x: 293; --y: 427; --w: 36; --h: 36; }
-.banner-dot-31 { --x: 116; --y: 89; --w: 31; --h: 31; }
-.banner-dot-20 { --x: 411; --y: 425; --w: 20; --h: 20; }
-.banner-dot-47 { --x: 58; --y: 41; --w: 47; --h: 47; }
-/* 30px right of the Figma megaphone spot (x 154), so the orbiting icons circle it. */
-.banner-laptop { --x: 184; --y: 17.41; --w: 340.58; --h: 367.589; }
-
-/* Between the orbit's back half (z-index 0) and front half (z-index 2), set by JS. */
-.banner-laptop {
-  z-index: 1;
-}
-
-/* Figma rotates the star 45° inside a 99.456px bounding box. */
-.banner-star-large { --x: 58; --y: 313; --w: 99.456; --h: 99.456; }
-
-.banner-star-large img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: calc(70.326 / 99.456 * 100%);
-  height: calc(70.326 / 99.456 * 100%);
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-/* Each ring is a 566 × 119 ellipse tilted 28.88° inside a 553 × 378 box. */
-.banner-ring { --w: 553.284; --h: 377.652; }
-.banner-ring-1 { --x: 40.46; --y: 64; }
-.banner-ring-2 { --x: 20.23; --y: 100.67; }
-.banner-ring-3 { --x: 0; --y: 137.35; }
-
-.banner-ring img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: calc(566.261 / 553.284 * 100%);
-  height: calc(118.948 / 377.652 * 100%);
-  transform: translate(-50%, -50%) rotate(28.88deg);
-}
-
-.banner-orbit-item { z-index: 1; }
-.banner-icon-heart { --x: 408.88; --y: 0; --w: 98.716; --h: 98.624; }
-.banner-icon-share { --x: 505.55; --y: 12.38; --w: 94.91; --h: 94.948; }
-.banner-icon-play { --x: 496.3; --y: 115.32; --w: 94.049; --h: 93.988; }
-.banner-icon-location { --x: 475.39; --y: 214.52; --w: 101.967; --h: 101.791; }
-
-.banner-orbit-icon {
-  position: relative;
-  cursor: pointer;
-}
-
-/* Pin sits at (31.28, 24.31) inside the 101.967 × 101.791 location circle. */
-.banner-location-pin {
-  position: absolute;
-  left: calc(31.28 / 101.967 * 100%);
-  top: calc(24.31 / 101.791 * 100%);
-  width: calc(39.18 / 101.967 * 100%);
-  height: calc(57.789 / 101.791 * 100%);
-}
-
-/* ===================== Logos ===================== */
-/* Figma spreads six logos across 1240px with justify-between, which works out to a ~96px gap.
-   The gap is padding (not flex gap) so each list ends with one gap and the loop has no seam. */
-.logos-item {
-  padding-right: 96px;
-}
-
-/* ===================== Services ===================== */
-.service-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  height: 100%;
-  padding: 50px;
-  overflow: clip;
-  border: 1px solid var(--color-dark);
-  border-radius: 45px;
-  box-shadow: 0 5px 0 0 var(--color-dark);
-  transition: all 0.3s ease-in-out;
-}
-
-/* Lift the card and deepen the shadow so its base stays put. */
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 11px 0 0 var(--color-dark);
-}
-
-.service-card:has(.service-link:focus-visible) {
-  outline: 3px solid var(--color-dark);
-  outline-offset: 4px;
-}
-
-/* Shine that sweeps across the title highlights on card hover. It sits at z-index -1
-   inside an isolated highlight: above the highlight colour, below the text. */
-.service-card .highlight {
-  --hl-shine: rgb(255 255 255 / 0.6);
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.service-card .highlight.highlight-white {
-  --hl-shine: rgb(188 19 254 / 0.3);
-}
-
-.service-card .highlight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(110deg, transparent 25%, var(--hl-shine) 50%, transparent 75%);
-  transform: translateX(-100%);
-}
-
-.service-card:hover .highlight::after {
-  transform: translateX(100%);
-  transition: transform 0.8s ease-in-out;
-}
-
-.service-card:hover .highlight + .highlight::after {
-  transition-delay: 0.12s;
-}
-
-.service-card.service-card-grey { background-color: var(--color-grey); }
-.service-card.service-card-purple { background-color: var(--color-purple); }
-.service-card.service-card-dark { color: #ffffff; background-color: var(--color-dark); }
-
-.service-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  font-size: 20px;
-  line-height: 28px;
-  white-space: nowrap;
-}
-
-.service-link:focus-visible {
-  outline: none;
-}
-
-/* Stretched link: covers the whole card so any click on it follows the link.
-   z-index 1 keeps it above the positioned illustration. */
-.service-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.service-link-icon {
-  transition: all 0.3s ease-in-out;
-}
-
-.service-card:hover .service-link-icon,
-.service-link:focus-visible .service-link-icon {
-  transform: rotate(45deg);
-}
-
-/* Illustrations are cropped PNGs. The frame keeps the Figma size (210px wide, per-art
-   ratio) and the image is offset inside it by the same % Figma uses for the crop. */
-.service-art {
-  position: relative;
-  flex: 0 1 auto;
-  width: 210px;
-  max-width: 45%;
-  aspect-ratio: 210 / var(--art-h);
-}
-
-.service-art-crop {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.service-art-crop img {
-  position: absolute;
-  left: var(--crop-l);
-  top: var(--crop-t);
-  width: var(--crop-w);
-  height: var(--crop-h);
-  max-width: none;
-}
-
-.service-art-seo { --art-h: 170; --crop-l: -24.42%; --crop-t: -44.12%; --crop-w: 148.84%; --crop-h: 188.24%; }
-.service-art-ppc { --art-h: 147.624; --crop-l: -13.37%; --crop-t: -40.14%; --crop-w: 126.73%; --crop-h: 180.28%; }
-.service-art-social { --art-h: 210; --crop-l: -20.99%; --crop-t: -20.33%; --crop-w: 141.44%; --crop-h: 140.66%; }
-.service-art-email { --art-h: 192.68; --crop-l: -24.42%; --crop-t: -26.69%; --crop-w: 140.67%; --crop-h: 153.3%; }
-.service-art-content { --art-h: 195.915; --crop-l: -15.76%; --crop-t: -20.47%; --crop-w: 132.08%; --crop-h: 141.26%; }
-.service-art-analytics { --art-h: 170; --crop-l: -4.07%; --crop-t: -16.88%; --crop-w: 108.36%; --crop-h: 134.02%; }
-
-/* SEO image sits 2px down in a 166px-tall box; social image is 1px in, 208.846px wide. */
-.service-art-seo .service-art-crop {
-  top: calc(2 / 170 * 100%);
-  bottom: auto;
-  height: calc(166.047 / 170 * 100%);
-}
-
-.service-art-social .service-art-crop {
-  left: calc(1 / 210 * 100%);
-  right: auto;
-  width: calc(208.846 / 210 * 100%);
-}
-
-/* Figma mirrors the email illustration horizontally. */
-.service-art-email .service-art-crop {
-  transform: scaleX(-1);
-}
-
-/* ===================== Technologies ===================== */
-/* Four tall bars side by side. Closed bars are 120px wide with the title turned on its
-   side; the open bar takes the remaining width and shows the brand balls. */
-.tech-bars {
-  display: flex;
-  gap: 20px;
-  height: 520px;
-}
-
-.tech-bar {
-  display: flex;
-  flex: 0 0 120px;
-  min-width: 0;
-  overflow: hidden;
-  background-color: var(--color-grey);
-  border: 1px solid var(--color-dark);
-  border-radius: 45px;
-  box-shadow: 0 5px 0 0 var(--color-dark);
-  transition: flex 0.6s ease-in-out, background-color 0.4s ease-in-out, color 0.4s ease-in-out;
-}
-
-.tech-bar.is-open {
-  flex: 1 1 0;
-  color: #ffffff;
-  background-color: var(--color-dark);
-}
-
-.tech-bar-head {
-  flex-shrink: 0;
-  width: 118px;
-}
-
-.tech-bar-trigger {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  width: 100%;
-  height: 100%;
-  padding: 40px 0;
-  cursor: pointer;
-}
-
-.tech-bar-trigger:focus-visible {
-  outline: 3px solid var(--color-purple);
-  outline-offset: -10px;
-  border-radius: 40px;
-}
-
-.tech-bar-number {
-  font-size: 40px;
-  font-weight: 500;
-  line-height: normal;
-  transition: all 0.4s ease-in-out;
-}
-
-.tech-bar.is-open .tech-bar-number {
-  color: var(--color-purple);
-}
-
-/* Reads bottom to top, like a book spine. */
-.tech-bar-title {
-  font-size: 30px;
-  font-weight: 500;
-  line-height: normal;
-  white-space: nowrap;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-}
-
-.tech-bar-panel {
-  flex: 1;
-  min-width: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.tech-bar.is-open .tech-bar-panel {
-  opacity: 1;
-  transition-delay: 0.3s;
-}
-
-.tech-bar-panel-inner {
-  display: flex;
-  height: 100%;
-  padding: 40px 44px 34px 10px;
-}
-
-/* The heap: balls are absolutely placed by JS (x / y) and sit on the bottom edge.
-   Hidden until the first layout so they never flash stacked in the corner. */
-/* --ball-max is the largest ball size; JS sets --ball to the size that fits the box. */
-.tech-pile {
-  --ball-max: 76px;
-  position: relative;
-  flex: 1;
-  min-width: 0;
-}
-
-.tech-pile:not(.is-ready) .tech-ball-item {
-  visibility: hidden;
-}
-
-.tech-ball-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--ball, var(--ball-max));
-  height: var(--ball, var(--ball-max));
-}
-
-.tech-ball-item:hover {
-  z-index: 2;
-}
-
-.tech-ball {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: var(--brand);
-  border: 2px solid rgb(255 255 255 / 0.85);
-  border-radius: 50%;
-  box-shadow: 0 4px 0 0 rgb(0 0 0 / 0.35);
-  cursor: pointer;
-}
-
-.tech-ball svg {
-  width: 47%;
-  height: 47%;
-  fill: var(--fg);
-}
-
-/* Name tag shown above the ball on hover. */
-.tech-ball-label {
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  padding: 3px 9px;
-  font-size: 13px;
-  line-height: normal;
-  white-space: nowrap;
-  color: var(--color-dark);
-  background-color: #ffffff;
-  border-radius: 7px;
-  opacity: 0;
-  transform: translate(-50%, 6px);
-  pointer-events: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.tech-ball-item:hover .tech-ball-label {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-/* ===================== Banner cursor ===================== */
-/* Round cursor over the banner text and button (see Banner.tsx). White + difference blend
-   reads as a black circle on the white page and inverts the text beneath it. */
-.banner-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 60;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: #ffffff;
-  mix-blend-mode: difference;
-  pointer-events: none;
-  transform: scale(0);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .banner-content,
-  .banner-content * {
-    cursor: none;
-  }
-}
-
-@media not ((hover: hover) and (pointer: fine)) {
-  .banner-cursor {
-    display: none;
-  }
-}
-
-/* ===================== Pricing ===================== */
-/* Stacked pricing cards: each slot sticks a little lower than the one before
-   (--i is its index), so the next card slides over it and earlier ones peek out. */
-.pricing-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.pricing-slot {
-  position: sticky;
-  top: calc(120px + var(--i) * 28px);
-}
-
-.pricing-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  min-height: 440px;
-  overflow: hidden;
-  border: 1px solid var(--color-dark);
-  border-radius: 45px;
-  box-shadow: 0 5px 0 0 var(--color-dark);
-  transform-origin: center top;
-  will-change: transform;
-}
-
-.pricing-main {
-  padding: 50px 60px;
-}
-
-/* Right-hand column, set off by a dashed divider like a ticket stub. */
-.pricing-included {
-  padding: 50px 60px;
-  border-left: 1px dashed currentColor;
-  background-color: rgb(255 255 255 / 0.35);
-}
-
-.pricing-card-grey { background-color: var(--color-grey); }
-.pricing-card-purple { background-color: var(--color-purple); }
-.pricing-card-dark { color: #ffffff; background-color: var(--color-dark); }
-.pricing-card-dark .pricing-included { background-color: rgb(255 255 255 / 0.06); }
-
-.pricing-index {
-  font-size: 18px;
-  font-weight: 500;
-  opacity: 0.6;
-}
-
-.pricing-features li {
-  position: relative;
-  padding-left: 34px;
-}
-
-/* Tick in a circle before each feature, drawn in CSS so it follows the card's text colour. */
-.pricing-features li::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 0;
-  width: 22px;
-  height: 22px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-}
-
-.pricing-features li::after {
-  content: "";
-  position: absolute;
-  top: 9px;
-  left: 6px;
-  width: 10px;
-  height: 5px;
-  border-left: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(-45deg);
-}
-
-.pricing-note {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  margin-top: 40px;
-  padding: 40px 60px;
-  border: 1px dashed var(--color-dark);
-  border-radius: 45px;
-}
-
-@media (max-width: 1199px) {
-  .pricing-main,
-  .pricing-included {
-    padding: 40px;
-  }
-}
-
-@media (max-width: 991px) {
-  .pricing-card {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: 0;
-  }
-
-  .pricing-included {
-    border-left: 0;
-    border-top: 1px dashed currentColor;
-  }
-
-  .pricing-note {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 32px;
-  }
-}
-
-/* Phones: cards are taller than the screen, so they simply follow each other. */
-@media (max-width: 767px) {
-  .pricing-stack {
-    gap: 30px;
-  }
-
-  .pricing-slot {
-    position: static;
-  }
-
-  .pricing-card,
-  .pricing-note {
-    border-radius: 30px;
-  }
-
-  .pricing-main,
-  .pricing-included,
-  .pricing-note {
-    padding: 30px 24px;
-  }
-}
-
-/* ===================== CTA ===================== */
-.cta-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 347px;
-  padding: 0 60px;
-  background-color: var(--color-grey);
-  border-radius: 45px;
-}
-
-/* Figma lets the 359 × 394 illustration overflow the 347px card by ~23.6px top and
-   bottom, 135px in from the right edge, mirrored horizontally. */
-.cta-art {
-  position: absolute;
-  top: calc((347px - 394.269px) / 2);
-  right: 135px;
-  width: 359px;
-  height: 394.269px;
-}
-
-.cta-art img {
-  width: 100%;
-  height: 100%;
-  transform: scaleX(-1);
-}
-
-/* ===================== Case Studies ===================== */
-/* Figma: three 286px columns with a 186px divider between them, 64px either side. */
-.case-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 286px));
-  column-gap: 128px;
-  align-items: start;
-  padding: 70px 60px;
-  color: #ffffff;
-  background-color: var(--color-dark);
-  border-radius: 45px;
-}
-
-.case-item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-/* The divider asset is a 186 × 1 horizontal line, turned upright and centred in the gap. */
-.case-item + .case-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -64px;
-  width: 186px;
-  height: 1px;
-  background: url("/images/case-studies/divider.svg") no-repeat 0 0 / 100% 100%;
-  transform: rotate(90deg);
-  transform-origin: 0 0;
-}
-
-.case-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  font-size: 20px;
-  line-height: 28px;
-  color: var(--color-purple);
-  white-space: nowrap;
-}
-
-/* Figma frames the arrow in a 17.321 × 10 box and lets the rotated 20.32 × 19.53 vector overflow it. */
-.case-link-icon {
-  position: relative;
-  flex-shrink: 0;
-  width: 17.321px;
-  height: 10px;
-  transition: all 0.3s ease-in-out;
-}
-
-.case-link-icon img {
-  position: absolute;
-  inset: -49.94% -8.66% -45.4% -8.66%;
-  width: auto;
-  height: auto;
-  max-width: none;
-}
-
-.case-link:hover .case-link-icon {
-  transform: translate(4px, -4px);
-}
-
-/* ===================== FAQ / Accordion ===================== */
-.accordion-item {
-  padding: 41px 60px;
-  overflow: clip;
-  background-color: var(--color-grey);
-  border: 1px solid var(--color-dark);
-  border-radius: 45px;
-  box-shadow: 0 5px 0 0 var(--color-dark);
-  transition: all 0.3s ease-in-out;
-}
-
-.accordion-item.is-open {
-  background-color: var(--color-purple);
-}
-
-.accordion-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-}
-
-.accordion-trigger:focus-visible {
-  outline: 3px solid var(--color-dark);
-  outline-offset: 8px;
-  border-radius: 8px;
-}
-
-/* min-width 0 lets long titles wrap instead of pushing the icon out of the card. */
-.accordion-label {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-  min-width: 0;
-  font-weight: 500;
-}
-
-.accordion-number {
-  font-size: 60px;
-  line-height: normal;
-  white-space: nowrap;
-}
-
-.accordion-title {
-  width: 612px;
-  max-width: 100%;
-  font-size: 30px;
-  line-height: normal;
-}
-
-/* Plus and minus are stacked; toggling cross-fades them with a half turn. */
-.accordion-icon {
-  position: relative;
-  flex-shrink: 0;
-  width: 58px;
-  height: 58px;
-}
-
-.accordion-icon img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transition: all 0.3s ease-in-out;
-}
-
-.accordion-icon-minus {
-  opacity: 0;
-  transform: rotate(-180deg);
-}
-
-.accordion-item.is-open .accordion-icon-plus {
-  opacity: 0;
-  transform: rotate(180deg);
-}
-
-.accordion-item.is-open .accordion-icon-minus {
-  opacity: 1;
-  transform: rotate(0deg);
-}
-
-/* Height animates by moving the grid row between 0fr and 1fr. */
-.accordion-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s ease-in-out;
-}
-
-.accordion-item.is-open .accordion-panel {
-  grid-template-rows: 1fr;
-}
-
-.accordion-panel-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  min-height: 0;
-  overflow: hidden;
-}
-
-/* The 30px gap above the divider lives here so it collapses with the panel. */
-.accordion-divider {
-  width: 100%;
-  height: 1px;
-  margin-top: 30px;
-}
-
-/* ===================== Team ===================== */
-.team-card {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  height: 100%;
-  min-height: 331px;
-  padding: 40px 35px;
-  background-color: #ffffff;
-  border: 1px solid var(--color-dark);
-  border-radius: 45px;
-  box-shadow: 0 5px 0 0 var(--color-dark);
-}
-
-/* Photo and name sit on a shared baseline. As in Figma, the name may run under the
-   icon's column (the icon is at the top, the name at the bottom), so the icon is pinned
-   to the top right instead of taking a column of its own. */
-.team-person {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-}
-
-.team-photo {
-  flex-shrink: 0;
-}
-
-/* Figma "Picture": dark blob 7.82px right / 5px down, with the masked photo on top. */
-.team-photo {
-  position: relative;
-  width: calc(7.82px + 97.8234px);
-  height: calc(5px + 97.8234px);
-}
-
-.team-photo-shadow {
-  position: absolute;
-  top: 5px;
-  left: 7.82px;
-  width: 97.8234px;
-  height: 97.8234px;
-}
-
-.team-photo-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 97.8234px;
-  height: 97.8234px;
-  overflow: hidden;
-  -webkit-mask: url("/images/team/photo-mask.svg") no-repeat 0 0 / 100% 100%;
-          mask: url("/images/team/photo-mask.svg") no-repeat 0 0 / 100% 100%;
-}
-
-/* Each photo's own crop: size and offset come from the card's data. */
-.team-photo-mask img {
-  position: absolute;
-  top: var(--photo-y);
-  left: var(--photo-x);
-  width: var(--photo-w);
-  height: var(--photo-h);
-  max-width: none;
-  object-fit: cover;
-}
-
-/* First card's purple tint, applied to every photo. */
-.team-photo-mask::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-purple);
-  mix-blend-mode: multiply;
-}
-
-/* Keep the full 194px role width from Figma; only phones let it shrink (Responsive). */
-.team-name {
-  flex-shrink: 0;
-}
-
-.team-name h3 {
-  white-space: nowrap;
-}
-
-.team-name p {
-  max-width: 194px;
-}
-
-.team-social {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  transition: all 0.3s ease-in-out;
-}
-
-.team-social:hover {
-  transform: scale(1.1);
-}
-
-.team-divider {
-  width: 100%;
-  height: 1px;
-}
-
-/* ===================== Testimonials ===================== */
-/* Figma block: 1240 × 625, cards start 84px down, 606px wide with 50px between them. */
-.testimonials-block {
-  overflow: hidden;
-  padding: 84px 0 68px;
-  background-color: var(--color-dark);
-  border-radius: 45px;
-}
-
-/* Every slide shares one grid cell; --offset (set per slide) moves it left or right. */
-.testimonials-track {
-  display: grid;
-  touch-action: pan-y;
-  user-select: none;
-}
-
-.testimonials-slide {
-  grid-area: 1 / 1;
-  justify-self: center;
-  width: 606px;
-  transform: translateX(calc(var(--offset) * (100% + 50px)));
-  transition: transform 0.6s ease-in-out;
-}
-
-.testimonials-slide.is-jumping {
-  transition: none;
-}
-
-.testimonials-slide img {
-  -webkit-user-drag: none;
-}
-
-.testimonial-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 20px;
-  margin: 0;
-}
-
-.testimonial-bubble {
-  position: relative;
-  width: 606px;
-  height: 266px;
-  margin: 0;
-}
-
-.testimonial-bubble-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.testimonial-quote {
-  position: absolute;
-  top: 48px;
-  left: 52px;
-  width: 502px;
-  font-size: 18px;
-  line-height: normal;
-  color: #ffffff;
-}
-
-/* Sits 80px in, under the bubble's tail. */
-.testimonial-author {
-  display: flex;
-  flex-direction: column;
-  width: 526px;
-  color: #ffffff;
-}
-
-.testimonial-name {
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  color: var(--color-purple);
-}
-
-.testimonial-role {
-  font-size: 18px;
-  line-height: normal;
-}
-
-/* Arrows and stars, 124px below the cards. */
-.testimonials-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 564px;
-  max-width: 100%;
-  margin: 124px auto 0;
-}
-
-/* Figma gives the arrow row the stars' 14px height and lets the 22px arrow overflow it. */
-.testimonials-arrow {
-  display: flex;
-  align-items: center;
-  height: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.testimonials-arrow:hover {
-  transform: translateX(-4px);
-}
-
-/* The asset points left; Figma turns it round for "next". */
-.testimonials-arrow.testimonials-arrow-next {
-  transform: rotate(180deg);
-}
-
-.testimonials-arrow.testimonials-arrow-next:hover {
-  transform: rotate(180deg) translateX(-4px);
-}
-
-.testimonials-arrow:focus-visible,
-.testimonials-dot:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 4px;
-}
-
-/* Stars asset (146 × 14, stars every 33px) used as a mask; the gradient paints the
-   star at --active purple and the rest white. Buttons sit on top as click targets. */
-.testimonials-dots {
-  --star: calc(var(--active) * 33px);
-  position: relative;
-  display: flex;
-  gap: 19px;
-}
-
-.testimonials-dots::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    #ffffff var(--star),
-    var(--color-purple) var(--star),
-    var(--color-purple) calc(var(--star) + 14px),
-    #ffffff calc(var(--star) + 14px)
-  );
-  -webkit-mask: url("/images/testimonials/stars.svg") no-repeat 0 0 / 100% 100%;
-          mask: url("/images/testimonials/stars.svg") no-repeat 0 0 / 100% 100%;
-  pointer-events: none;
-}
-
-.testimonials-dot {
-  width: 14px;
-  height: 14px;
-  cursor: pointer;
-}
-
-/* ===================== Contact ===================== */
-/* Figma: 1240 × 773 grey card, form 100px in from the left, illustration on the right
-   overflowing the card and clipped by its rounded edge. */
-.contact-card {
-  position: relative;
-  min-height: 773px;
-  padding: 60px 100px 80px;
-  overflow: hidden;
-  background-color: var(--color-grey);
-  border-radius: 45px;
-}
-
-.contact-form {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  width: 556px;
-  max-width: 100%;
-}
-
-.contact-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.contact-field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.contact-field label {
-  font-size: 16px;
-  line-height: 28px;
-}
-
-.contact-field input,
-.contact-field textarea {
-  width: 100%;
-  padding: 18px 30px;
-  font-size: 18px;
-  line-height: normal;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 14px;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Figma heights include the 1px border: 59px inputs, 190px message box. */
-.contact-field input {
-  height: 59px;
-}
-
-.contact-field textarea {
-  height: 190px;
-  resize: vertical;
-}
-
-.contact-field input::placeholder,
-.contact-field textarea::placeholder {
-  color: #898989; /* Figma placeholder grey, only used here */
-}
-
-.contact-field input:focus,
-.contact-field textarea:focus {
-  border-color: var(--color-purple);
-  outline: none;
-  box-shadow: 0 0 0 3px rgb(188 19 254 / 0.25);
-}
-
-.contact-actions {
-  position: relative;
-}
-
-/* 19px padding keeps the bordered button at Figma's 68px. */
-.contact-submit {
-  width: 100%;
-  padding-top: 19px;
-  padding-bottom: 19px;
-}
-
-/* Sits in the card's bottom padding so it doesn't change the Figma height. */
-.contact-status {
-  position: absolute;
-  top: calc(100% + 16px);
-  left: 0;
-  font-size: 16px;
-}
-
-/* Illustration layers, positioned from the card's top-left corner (Figma values). */
-.contact-art {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.contact-starburst {
-  position: absolute;
-  top: 62.5px;
-  left: 914.71px;
-  width: 649.922px;
-  height: 648.251px;
-  max-width: none;
-}
-
-/* Each star is drawn upright in a box 1/√2 of its Figma frame and turned 45°. */
-.contact-star {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.contact-star img {
-  max-width: none;
-  transform: rotate(45deg);
-}
-
-.contact-star-purple {
-  top: 486.79px;
-  left: 943.71px;
-  width: 141.42px;
-  height: 141.42px;
-}
-
-.contact-star-purple img {
-  width: 100px;
-  height: 100px;
-}
-
-.contact-star-dark {
-  top: 224.21px;
-  left: 1045.42px;
-  width: 252.71px;
-  height: 252.71px;
-}
-
-.contact-star-dark img {
-  width: 178.693px;
-  height: 178.693px;
-}
-
-/* ===================== Footer ===================== */
-.footer-link {
-  font-size: 18px;
-  text-decoration: underline;
-  text-underline-position: from-font;
-  transition: all 0.3s ease-in-out;
-}
-
-.footer-link:hover {
-  color: var(--color-purple);
-}
-
-/* ===================== Responsive ===================== */
-@media (max-width: 1199px) {
+  /* ===================== Container ===================== */
+  /* Figma frame is 1440px wide with 100px side padding. */
   .site-container {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-
-  /* 32px offset at the top on smaller screens (17 + 15). */
-  .site-header {
-    margin-top: 17px;
-  }
-
-  .contact-card {
-    padding: 60px 40px 80px;
-  }
-
-  .tech-bar {
-    flex-basis: 96px;
-  }
-
-  .tech-bar-head {
-    width: 94px;
-  }
-
-  .tech-bar-number {
-    font-size: 32px;
-  }
-
-  .tech-bar-title {
-    font-size: 26px;
-  }
-
-  .cta-art {
-    right: 40px;
-  }
-}
-
-@media (max-width: 991px) {
-  .cta-card {
-    min-height: 0;
-    padding: 50px 40px;
-  }
-
-  .cta-art {
-    display: none;
-  }
-
-  .case-list {
-    grid-template-columns: 1fr;
-    row-gap: 41px;
-    padding: 50px 40px;
-  }
-
-  /* Stacked: the divider lies flat, centred in the 41px gap above each item. */
-  .case-item + .case-item::before {
-    top: -21px;
-    left: 0;
     width: 100%;
-    transform: none;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-left: 100px;
+    padding-right: 100px;
   }
 
-  .contact-card {
-    min-height: 0;
+  /* ===================== Highlight label ===================== */
+  /* Figma "Label": text on a coloured block, used for section and card headings. */
+  /* The colour is a gradient sized by --hl-size so it can be wiped in (Services animates 0% → 100%). */
+  .highlight {
+    --hl-color: var(--color-purple);
+    padding: 0 7px;
+    color: #000000;
+    background: linear-gradient(var(--hl-color), var(--hl-color)) no-repeat 0
+      0 / var(--hl-size, 100%) 100%;
+    border-radius: 7px;
   }
 
-  .contact-form {
-    width: 100%;
+  .highlight.highlight-white {
+    --hl-color: #ffffff;
   }
 
-  .contact-art {
-    display: none;
-  }
-
-  /* Stacked: bars become full-width rows that open downwards (grid 0fr → 1fr). */
-  .tech-bars {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .tech-bar,
-  .tech-bar.is-open {
-    flex: none;
-    flex-direction: column;
-  }
-
-  .tech-bar-head {
-    width: 100%;
-  }
-
-  .tech-bar-trigger {
-    flex-direction: row;
-    gap: 20px;
-    padding: 28px 40px;
-    text-align: left;
-  }
-
-  .tech-bar-title {
-    white-space: normal;
-    writing-mode: horizontal-tb;
-    transform: none;
-  }
-
-  .tech-bar-panel {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.5s ease-in-out, opacity 0.3s ease-in-out;
-  }
-
-  .tech-bar.is-open .tech-bar-panel {
-    grid-template-rows: 1fr;
-    transition-delay: 0s;
-  }
-
-  .tech-bar-panel-inner {
-    min-height: 0;
-    overflow: hidden;
-    padding: 0 40px;
-  }
-
-  .tech-bar.is-open .tech-bar-panel-inner {
-    padding-bottom: 32px;
-  }
-
-  /* Stacked bars have no fixed height, so give the heap its own. */
-  .tech-pile {
-    height: 250px;
-  }
-}
-
-@media (max-width: 767px) {
-  .site-container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
+  /* ===================== Buttons ===================== */
   .btn {
-    padding: 16px 28px;
-    font-size: 18px;
-  }
-
-  .logos-item {
-    padding-right: 56px;
-  }
-
-  .service-card {
-    padding: 30px;
-    border-radius: 30px;
-  }
-
-  .cta-card {
-    padding: 40px 30px;
-    border-radius: 30px;
-  }
-
-  .case-list {
-    padding: 40px 30px;
-    border-radius: 30px;
-  }
-
-  .accordion-item {
-    padding: 30px;
-    border-radius: 30px;
-  }
-
-  .accordion-label {
-    gap: 16px;
-  }
-
-  .accordion-number {
-    font-size: 30px;
-  }
-
-  .accordion-title {
-    font-size: 18px;
-  }
-
-  .accordion-icon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .team-card {
-    min-height: 0;
-    padding: 30px;
-    border-radius: 30px;
-  }
-
-  .contact-card {
-    padding: 40px 24px 70px;
-    border-radius: 30px;
-  }
-
-  .tech-bar {
-    border-radius: 30px;
-  }
-
-  .tech-bar-trigger {
-    padding: 22px 24px;
-  }
-
-  .tech-bar-number {
-    font-size: 26px;
-  }
-
-  .tech-bar-title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 35px;
     font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    white-space: nowrap;
+    color: #000000;
+    border: 1px solid var(--color-dark);
+    border-radius: 14px;
+    transition: all 0.3s ease-in-out;
   }
 
-  .tech-bar-panel-inner {
-    padding: 0 24px;
+  .btn:hover {
+    color: #ffffff;
+    background-color: var(--color-dark);
   }
 
-  .tech-bar.is-open .tech-bar-panel-inner {
-    padding-bottom: 28px;
+  .btn.btn-purple {
+    background-color: var(--color-purple);
+    border-color: var(--color-purple);
   }
 
-  .tech-pile {
-    --ball-max: 58px;
-    height: 220px;
+  .btn.btn-purple:hover {
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #ffffff;
   }
 
-  /* The message wraps on phones, so let it push the card taller instead of overflowing. */
-  .contact-status {
-    position: static;
-    margin-top: 16px;
+  .btn.btn-dark {
+    color: #ffffff;
+    background-color: var(--color-dark);
   }
 
-  /* Stays rendered (not display:none) so screen readers still announce the message. */
-  .contact-status:empty {
-    margin-top: 0;
+  .btn.btn-dark:hover {
+    color: var(--color-dark);
+    background-color: #ffffff;
   }
 
-  .team-name {
-    flex-shrink: 1;
-    min-width: 0;
+  /* ===================== Header ===================== */
+  /* Sticky bar. Margin + padding keep the Figma 60px offset at the top of the page
+   (45 + 15) without the bar changing height when it sticks, so nothing jumps. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    /* margin-top: 45px; */
+    padding: 15px 0;
+    transition: all 0.3s ease-in-out;
   }
 
-  /* Phones: the fixed 606 × 266 bubble asset can't stretch without distorting, so the
-     bubble becomes a bordered box with a CSS tail and grows with the quote. */
-  .testimonials-block {
-    padding: 40px 0;
-    border-radius: 30px;
+  .site-header.is-sticky {
+    background-color: rgb(255 255 255 / 0.7);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
   }
 
-  .testimonials-slide {
-    width: calc(100% - 40px);
-    transform: translateX(calc(var(--offset) * (100% + 20px)));
+  .nav-link {
+    font-size: 20px;
+    line-height: 28px;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
   }
 
-  .testimonial-card {
-    align-items: stretch;
+  .nav-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
-  .testimonial-bubble {
+  /* ===================== Banner ===================== */
+  /* Illustration is a fixed-ratio stage (Figma frame 601 × 516). Each piece sets its
+   Figma x / y / width / height in px and is converted to % so the stage scales. */
+  .banner-stage {
+    position: relative;
+    flex: 0 1 auto; /* basis must stay auto so the stacked (column) layout keeps the ratio */
+    width: 601px;
+    max-width: 100%;
+    aspect-ratio: 601 / 516;
+  }
+
+  .banner-piece {
+    position: absolute;
+    left: calc(var(--x) / 601 * 100%);
+    top: calc(var(--y) / 516 * 100%);
+    width: calc(var(--w) / 601 * 100%);
+    height: calc(var(--h) / 516 * 100%);
+  }
+
+  .banner-piece img,
+  .banner-orbit-float,
+  .banner-orbit-icon {
+    display: block;
     width: 100%;
-    height: auto;
-    margin-bottom: 18px;
-    padding: 30px 24px;
-    border: 1px solid var(--color-purple);
-    border-radius: 30px;
+    height: 100%;
   }
 
-  .testimonial-bubble::after {
+  .banner-star-small {
+    --x: 293;
+    --y: 427;
+    --w: 36;
+    --h: 36;
+  }
+  .banner-dot-31 {
+    --x: 116;
+    --y: 89;
+    --w: 31;
+    --h: 31;
+  }
+  .banner-dot-20 {
+    --x: 411;
+    --y: 425;
+    --w: 20;
+    --h: 20;
+  }
+  .banner-dot-47 {
+    --x: 58;
+    --y: 41;
+    --w: 47;
+    --h: 47;
+  }
+  /* 30px right of the Figma megaphone spot (x 154), so the orbiting icons circle it. */
+  .banner-laptop {
+    --x: 184;
+    --y: 17.41;
+    --w: 340.58;
+    --h: 367.589;
+  }
+
+  /* Between the orbit's back half (z-index 0) and front half (z-index 2), set by JS. */
+  .banner-laptop {
+    z-index: 1;
+  }
+
+  /* Figma rotates the star 45° inside a 99.456px bounding box. */
+  .banner-star-large {
+    --x: 58;
+    --y: 313;
+    --w: 99.456;
+    --h: 99.456;
+  }
+
+  .banner-star-large img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(70.326 / 99.456 * 100%);
+    height: calc(70.326 / 99.456 * 100%);
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  /* Each ring is a 566 × 119 ellipse tilted 28.88° inside a 553 × 378 box. */
+  .banner-ring {
+    --w: 553.284;
+    --h: 377.652;
+  }
+  .banner-ring-1 {
+    --x: 40.46;
+    --y: 64;
+  }
+  .banner-ring-2 {
+    --x: 20.23;
+    --y: 100.67;
+  }
+  .banner-ring-3 {
+    --x: 0;
+    --y: 137.35;
+  }
+
+  .banner-ring img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(566.261 / 553.284 * 100%);
+    height: calc(118.948 / 377.652 * 100%);
+    transform: translate(-50%, -50%) rotate(28.88deg);
+  }
+
+  .banner-orbit-item {
+    z-index: 1;
+  }
+  .banner-icon-heart {
+    --x: 408.88;
+    --y: 0;
+    --w: 98.716;
+    --h: 98.624;
+  }
+  .banner-icon-share {
+    --x: 505.55;
+    --y: 12.38;
+    --w: 94.91;
+    --h: 94.948;
+  }
+  .banner-icon-play {
+    --x: 496.3;
+    --y: 115.32;
+    --w: 94.049;
+    --h: 93.988;
+  }
+  .banner-icon-location {
+    --x: 475.39;
+    --y: 214.52;
+    --w: 101.967;
+    --h: 101.791;
+  }
+
+  .banner-orbit-icon {
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* Pin sits at (31.28, 24.31) inside the 101.967 × 101.791 location circle. */
+  .banner-location-pin {
+    position: absolute;
+    left: calc(31.28 / 101.967 * 100%);
+    top: calc(24.31 / 101.791 * 100%);
+    width: calc(39.18 / 101.967 * 100%);
+    height: calc(57.789 / 101.791 * 100%);
+  }
+
+  /* ===================== Logos ===================== */
+  /* Figma spreads six logos across 1240px with justify-between, which works out to a ~96px gap.
+   The gap is padding (not flex gap) so each list ends with one gap and the loop has no seam. */
+  .logos-item {
+    padding-right: 96px;
+  }
+
+  /* ===================== Services ===================== */
+  .service-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 100%;
+    padding: 50px;
+    overflow: clip;
+    border: 1px solid var(--color-dark);
+    border-radius: 45px;
+    box-shadow: 0 5px 0 0 var(--color-dark);
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Lift the card and deepen the shadow so its base stays put. */
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 11px 0 0 var(--color-dark);
+  }
+
+  .service-card:has(.service-link:focus-visible) {
+    outline: 3px solid var(--color-dark);
+    outline-offset: 4px;
+  }
+
+  /* Shine that sweeps across the title highlights on card hover. It sits at z-index -1
+   inside an isolated highlight: above the highlight colour, below the text. */
+  .service-card .highlight {
+    --hl-shine: rgb(255 255 255 / 0.6);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .service-card .highlight.highlight-white {
+    --hl-shine: rgb(188 19 254 / 0.3);
+  }
+
+  .service-card .highlight::after {
     content: "";
     position: absolute;
-    bottom: -14px;
-    left: 50px;
-    width: 26px;
-    height: 26px;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      var(--hl-shine) 50%,
+      transparent 75%
+    );
+    transform: translateX(-100%);
+  }
+
+  .service-card:hover .highlight::after {
+    transform: translateX(100%);
+    transition: transform 0.8s ease-in-out;
+  }
+
+  .service-card:hover .highlight + .highlight::after {
+    transition-delay: 0.12s;
+  }
+
+  .service-card.service-card-grey {
+    background-color: var(--color-grey);
+  }
+  .service-card.service-card-purple {
+    background-color: var(--color-purple);
+  }
+  .service-card.service-card-dark {
+    color: #ffffff;
     background-color: var(--color-dark);
-    border-right: 1px solid var(--color-purple);
-    border-bottom: 1px solid var(--color-purple);
+  }
+
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 20px;
+    line-height: 28px;
+    white-space: nowrap;
+  }
+
+  .service-link:focus-visible {
+    outline: none;
+  }
+
+  /* Stretched link: covers the whole card so any click on it follows the link.
+   z-index 1 keeps it above the positioned illustration. */
+  .service-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .service-link-icon {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .service-card:hover .service-link-icon,
+  .service-link:focus-visible .service-link-icon {
     transform: rotate(45deg);
   }
 
+  /* Illustrations are cropped PNGs. The frame keeps the Figma size (210px wide, per-art
+   ratio) and the image is offset inside it by the same % Figma uses for the crop. */
+  .service-art {
+    position: relative;
+    flex: 0 1 auto;
+    width: 210px;
+    max-width: 45%;
+    aspect-ratio: 210 / var(--art-h);
+  }
+
+  .service-art-crop {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .service-art-crop img {
+    position: absolute;
+    left: var(--crop-l);
+    top: var(--crop-t);
+    width: var(--crop-w);
+    height: var(--crop-h);
+    max-width: none;
+  }
+
+  .service-art-seo {
+    --art-h: 170;
+    --crop-l: -24.42%;
+    --crop-t: -44.12%;
+    --crop-w: 148.84%;
+    --crop-h: 188.24%;
+  }
+  .service-art-ppc {
+    --art-h: 147.624;
+    --crop-l: -13.37%;
+    --crop-t: -40.14%;
+    --crop-w: 126.73%;
+    --crop-h: 180.28%;
+  }
+  .service-art-social {
+    --art-h: 210;
+    --crop-l: -20.99%;
+    --crop-t: -20.33%;
+    --crop-w: 141.44%;
+    --crop-h: 140.66%;
+  }
+  .service-art-email {
+    --art-h: 192.68;
+    --crop-l: -24.42%;
+    --crop-t: -26.69%;
+    --crop-w: 140.67%;
+    --crop-h: 153.3%;
+  }
+  .service-art-content {
+    --art-h: 195.915;
+    --crop-l: -15.76%;
+    --crop-t: -20.47%;
+    --crop-w: 132.08%;
+    --crop-h: 141.26%;
+  }
+  .service-art-analytics {
+    --art-h: 170;
+    --crop-l: -4.07%;
+    --crop-t: -16.88%;
+    --crop-w: 108.36%;
+    --crop-h: 134.02%;
+  }
+
+  /* SEO image sits 2px down in a 166px-tall box; social image is 1px in, 208.846px wide. */
+  .service-art-seo .service-art-crop {
+    top: calc(2 / 170 * 100%);
+    bottom: auto;
+    height: calc(166.047 / 170 * 100%);
+  }
+
+  .service-art-social .service-art-crop {
+    left: calc(1 / 210 * 100%);
+    right: auto;
+    width: calc(208.846 / 210 * 100%);
+  }
+
+  /* Figma mirrors the email illustration horizontally. */
+  .service-art-email .service-art-crop {
+    transform: scaleX(-1);
+  }
+
+  /* ===================== Technologies ===================== */
+  /* Four tall bars side by side. Closed bars are 120px wide with the title turned on its
+   side; the open bar takes the remaining width and shows the brand balls. */
+  .tech-bars {
+    display: flex;
+    gap: 20px;
+    height: 520px;
+  }
+
+  .tech-bar {
+    display: flex;
+    flex: 0 0 120px;
+    min-width: 0;
+    overflow: hidden;
+    background-color: var(--color-grey);
+    border: 1px solid var(--color-dark);
+    border-radius: 45px;
+    box-shadow: 0 5px 0 0 var(--color-dark);
+    transition:
+      flex 0.6s ease-in-out,
+      background-color 0.4s ease-in-out,
+      color 0.4s ease-in-out;
+  }
+
+  .tech-bar.is-open {
+    flex: 1 1 0;
+    color: #ffffff;
+    background-color: var(--color-dark);
+  }
+
+  .tech-bar-head {
+    flex-shrink: 0;
+    width: 118px;
+  }
+
+  .tech-bar-trigger {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+    padding: 40px 0;
+    cursor: pointer;
+  }
+
+  .tech-bar-trigger:focus-visible {
+    outline: 3px solid var(--color-purple);
+    outline-offset: -10px;
+    border-radius: 40px;
+  }
+
+  .tech-bar-number {
+    font-size: 40px;
+    font-weight: 500;
+    line-height: normal;
+    transition: all 0.4s ease-in-out;
+  }
+
+  .tech-bar.is-open .tech-bar-number {
+    color: var(--color-purple);
+  }
+
+  /* Reads bottom to top, like a book spine. */
+  .tech-bar-title {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: normal;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .tech-bar-panel {
+    flex: 1;
+    min-width: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .tech-bar.is-open .tech-bar-panel {
+    opacity: 1;
+    transition-delay: 0.3s;
+  }
+
+  .tech-bar-panel-inner {
+    display: flex;
+    height: 100%;
+    padding: 40px 44px 34px 10px;
+  }
+
+  /* The heap: balls are absolutely placed by JS (x / y) and sit on the bottom edge.
+   Hidden until the first layout so they never flash stacked in the corner. */
+  /* --ball-max is the largest ball size; JS sets --ball to the size that fits the box. */
+  .tech-pile {
+    --ball-max: 76px;
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tech-pile:not(.is-ready) .tech-ball-item {
+    visibility: hidden;
+  }
+
+  .tech-ball-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--ball, var(--ball-max));
+    height: var(--ball, var(--ball-max));
+  }
+
+  .tech-ball-item:hover {
+    z-index: 2;
+  }
+
+  .tech-ball {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--brand);
+    border: 2px solid rgb(255 255 255 / 0.85);
+    border-radius: 50%;
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 0.35);
+    cursor: pointer;
+  }
+
+  .tech-ball svg {
+    width: 47%;
+    height: 47%;
+    fill: var(--fg);
+  }
+
+  /* Name tag shown above the ball on hover. */
+  .tech-ball-label {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    padding: 3px 9px;
+    font-size: 13px;
+    line-height: normal;
+    white-space: nowrap;
+    color: var(--color-dark);
+    background-color: #ffffff;
+    border-radius: 7px;
+    opacity: 0;
+    transform: translate(-50%, 6px);
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .tech-ball-item:hover .tech-ball-label {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ===================== Banner cursor ===================== */
+  /* Round cursor over the banner text and button (see Banner.tsx). White + difference blend
+   reads as a black circle on the white page and inverts the text beneath it. */
+  .banner-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #ffffff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    transform: scale(0);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .banner-content,
+    .banner-content * {
+      cursor: none;
+    }
+  }
+
+  @media not ((hover: hover) and (pointer: fine)) {
+    .banner-cursor {
+      display: none;
+    }
+  }
+
+  /* ===================== Pricing ===================== */
+  /* Stacked pricing cards: each slot sticks a little lower than the one before
+   (--i is its index), so the next card slides over it and earlier ones peek out. */
+  .pricing-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .pricing-slot {
+    position: sticky;
+    top: calc(120px + var(--i) * 28px);
+  }
+
+  .pricing-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    min-height: 440px;
+    overflow: hidden;
+    border: 1px solid var(--color-dark);
+    border-radius: 45px;
+    box-shadow: 0 5px 0 0 var(--color-dark);
+    transform-origin: center top;
+    will-change: transform;
+  }
+
+  .pricing-main {
+    padding: 50px 60px;
+  }
+
+  /* Right-hand column, set off by a dashed divider like a ticket stub. */
+  .pricing-included {
+    padding: 50px 60px;
+    border-left: 1px dashed currentColor;
+    background-color: rgb(255 255 255 / 0.35);
+  }
+
+  .pricing-card-grey {
+    background-color: var(--color-grey);
+  }
+  .pricing-card-purple {
+    background-color: var(--color-purple);
+  }
+  .pricing-card-dark {
+    color: #ffffff;
+    background-color: var(--color-dark);
+  }
+  .pricing-card-dark .pricing-included {
+    background-color: rgb(255 255 255 / 0.06);
+  }
+
+  .pricing-index {
+    font-size: 18px;
+    font-weight: 500;
+    opacity: 0.6;
+  }
+
+  .pricing-features li {
+    position: relative;
+    padding-left: 34px;
+  }
+
+  /* Tick in a circle before each feature, drawn in CSS so it follows the card's text colour. */
+  .pricing-features li::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+  }
+
+  .pricing-features li::after {
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 6px;
+    width: 10px;
+    height: 5px;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg);
+  }
+
+  .pricing-note {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 40px;
+    padding: 40px 60px;
+    border: 1px dashed var(--color-dark);
+    border-radius: 45px;
+  }
+
+  @media (max-width: 1199px) {
+    .pricing-main,
+    .pricing-included {
+      padding: 40px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .pricing-card {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+
+    .pricing-included {
+      border-left: 0;
+      border-top: 1px dashed currentColor;
+    }
+
+    .pricing-note {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 32px;
+    }
+  }
+
+  /* Phones: cards are taller than the screen, so they simply follow each other. */
+  @media (max-width: 767px) {
+    .pricing-stack {
+      gap: 30px;
+    }
+
+    .pricing-slot {
+      position: static;
+    }
+
+    .pricing-card,
+    .pricing-note {
+      border-radius: 30px;
+    }
+
+    .pricing-main,
+    .pricing-included,
+    .pricing-note {
+      padding: 30px 24px;
+    }
+  }
+
+  /* ===================== CTA ===================== */
+  .cta-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 347px;
+    padding: 0 60px;
+    background-color: var(--color-grey);
+    border-radius: 45px;
+  }
+
+  /* Figma lets the 359 × 394 illustration overflow the 347px card by ~23.6px top and
+   bottom, 135px in from the right edge, mirrored horizontally. */
+  .cta-art {
+    position: absolute;
+    top: calc((347px - 394.269px) / 2);
+    right: 135px;
+    width: 359px;
+    height: 394.269px;
+  }
+
+  .cta-art img {
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+  }
+
+  /* ===================== Case Studies ===================== */
+  /* Figma: three 286px columns with a 186px divider between them, 64px either side. */
+  .case-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 286px));
+    column-gap: 128px;
+    align-items: start;
+    padding: 70px 60px;
+    color: #ffffff;
+    background-color: var(--color-dark);
+    border-radius: 45px;
+  }
+
+  .case-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* The divider asset is a 186 × 1 horizontal line, turned upright and centred in the gap. */
+  .case-item + .case-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -64px;
+    width: 186px;
+    height: 1px;
+    background: url("/images/case-studies/divider.svg") no-repeat 0 0 / 100%
+      100%;
+    transform: rotate(90deg);
+    transform-origin: 0 0;
+  }
+
+  .case-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--color-purple);
+    white-space: nowrap;
+  }
+
+  /* Figma frames the arrow in a 17.321 × 10 box and lets the rotated 20.32 × 19.53 vector overflow it. */
+  .case-link-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 17.321px;
+    height: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .case-link-icon img {
+    position: absolute;
+    inset: -49.94% -8.66% -45.4% -8.66%;
+    width: auto;
+    height: auto;
+    max-width: none;
+  }
+
+  .case-link:hover .case-link-icon {
+    transform: translate(4px, -4px);
+  }
+
+  /* ===================== FAQ / Accordion ===================== */
+  .accordion-item {
+    padding: 41px 60px;
+    overflow: clip;
+    background-color: var(--color-grey);
+    border: 1px solid var(--color-dark);
+    border-radius: 45px;
+    box-shadow: 0 5px 0 0 var(--color-dark);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .accordion-item.is-open {
+    background-color: var(--color-purple);
+  }
+
+  .accordion-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .accordion-trigger:focus-visible {
+    outline: 3px solid var(--color-dark);
+    outline-offset: 8px;
+    border-radius: 8px;
+  }
+
+  /* min-width 0 lets long titles wrap instead of pushing the icon out of the card. */
+  .accordion-label {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    min-width: 0;
+    font-weight: 500;
+  }
+
+  .accordion-number {
+    font-size: 60px;
+    line-height: normal;
+    white-space: nowrap;
+  }
+
+  .accordion-title {
+    width: 612px;
+    max-width: 100%;
+    font-size: 30px;
+    line-height: normal;
+  }
+
+  /* Plus and minus are stacked; toggling cross-fades them with a half turn. */
+  .accordion-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 58px;
+    height: 58px;
+  }
+
+  .accordion-icon img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .accordion-icon-minus {
+    opacity: 0;
+    transform: rotate(-180deg);
+  }
+
+  .accordion-item.is-open .accordion-icon-plus {
+    opacity: 0;
+    transform: rotate(180deg);
+  }
+
+  .accordion-item.is-open .accordion-icon-minus {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+
+  /* Height animates by moving the grid row between 0fr and 1fr. */
+  .accordion-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease-in-out;
+  }
+
+  .accordion-item.is-open .accordion-panel {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion-panel-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* The 30px gap above the divider lives here so it collapses with the panel. */
+  .accordion-divider {
+    width: 100%;
+    height: 1px;
+    margin-top: 30px;
+  }
+
+  /* ===================== Team ===================== */
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    height: 100%;
+    min-height: 331px;
+    padding: 40px 35px;
+    background-color: #ffffff;
+    border: 1px solid var(--color-dark);
+    border-radius: 45px;
+    box-shadow: 0 5px 0 0 var(--color-dark);
+  }
+
+  /* Photo and name sit on a shared baseline. As in Figma, the name may run under the
+   icon's column (the icon is at the top, the name at the bottom), so the icon is pinned
+   to the top right instead of taking a column of its own. */
+  .team-person {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  .team-photo {
+    flex-shrink: 0;
+  }
+
+  /* Figma "Picture": dark blob 7.82px right / 5px down, with the masked photo on top. */
+  .team-photo {
+    position: relative;
+    width: calc(7.82px + 97.8234px);
+    height: calc(5px + 97.8234px);
+  }
+
+  .team-photo-shadow {
+    position: absolute;
+    top: 5px;
+    left: 7.82px;
+    width: 97.8234px;
+    height: 97.8234px;
+  }
+
+  .team-photo-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 97.8234px;
+    height: 97.8234px;
+    overflow: hidden;
+    -webkit-mask: url("/images/team/photo-mask.svg") no-repeat 0 0 / 100% 100%;
+    mask: url("/images/team/photo-mask.svg") no-repeat 0 0 / 100% 100%;
+  }
+
+  /* Each photo's own crop: size and offset come from the card's data. */
+  .team-photo-mask img {
+    position: absolute;
+    top: var(--photo-y);
+    left: var(--photo-x);
+    width: var(--photo-w);
+    height: var(--photo-h);
+    max-width: none;
+    object-fit: cover;
+  }
+
+  /* First card's purple tint, applied to every photo. */
+  .team-photo-mask::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-purple);
+    mix-blend-mode: multiply;
+  }
+
+  /* Keep the full 194px role width from Figma; only phones let it shrink (Responsive). */
+  .team-name {
+    flex-shrink: 0;
+  }
+
+  .team-name h3 {
+    white-space: nowrap;
+  }
+
+  .team-name p {
+    max-width: 194px;
+  }
+
+  .team-social {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .team-social:hover {
+    transform: scale(1.1);
+  }
+
+  .team-divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  /* ===================== Testimonials ===================== */
+  /* Figma block: 1240 × 625, cards start 84px down, 606px wide with 50px between them. */
+  .testimonials-block {
+    overflow: hidden;
+    padding: 84px 0 68px;
+    background-color: var(--color-dark);
+    border-radius: 45px;
+  }
+
+  /* Every slide shares one grid cell; --offset (set per slide) moves it left or right. */
+  .testimonials-track {
+    display: grid;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  .testimonials-slide {
+    grid-area: 1 / 1;
+    justify-self: center;
+    width: 606px;
+    transform: translateX(calc(var(--offset) * (100% + 50px)));
+    transition: transform 0.6s ease-in-out;
+  }
+
+  .testimonials-slide.is-jumping {
+    transition: none;
+  }
+
+  .testimonials-slide img {
+    -webkit-user-drag: none;
+  }
+
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    margin: 0;
+  }
+
+  .testimonial-bubble {
+    position: relative;
+    width: 606px;
+    height: 266px;
+    margin: 0;
+  }
+
   .testimonial-bubble-bg {
-    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .testimonial-quote {
-    position: static;
-    width: auto;
+    position: absolute;
+    top: 48px;
+    left: 52px;
+    width: 502px;
+    font-size: 18px;
+    line-height: normal;
+    color: #ffffff;
+  }
+
+  /* Sits 80px in, under the bubble's tail. */
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    width: 526px;
+    color: #ffffff;
+  }
+
+  .testimonial-name {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: var(--color-purple);
+  }
+
+  .testimonial-role {
+    font-size: 18px;
+    line-height: normal;
+  }
+
+  /* Arrows and stars, 124px below the cards. */
+  .testimonials-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 564px;
+    max-width: 100%;
+    margin: 124px auto 0;
+  }
+
+  /* Figma gives the arrow row the stars' 14px height and lets the 22px arrow overflow it. */
+  .testimonials-arrow {
+    display: flex;
+    align-items: center;
+    height: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .testimonials-arrow:hover {
+    transform: translateX(-4px);
+  }
+
+  /* The asset points left; Figma turns it round for "next". */
+  .testimonials-arrow.testimonials-arrow-next {
+    transform: rotate(180deg);
+  }
+
+  .testimonials-arrow.testimonials-arrow-next:hover {
+    transform: rotate(180deg) translateX(-4px);
+  }
+
+  .testimonials-arrow:focus-visible,
+  .testimonials-dot:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+  }
+
+  /* Stars asset (146 × 14, stars every 33px) used as a mask; the gradient paints the
+   star at --active purple and the rest white. Buttons sit on top as click targets. */
+  .testimonials-dots {
+    --star: calc(var(--active) * 33px);
+    position: relative;
+    display: flex;
+    gap: 19px;
+  }
+
+  .testimonials-dots::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      #ffffff var(--star),
+      var(--color-purple) var(--star),
+      var(--color-purple) calc(var(--star) + 14px),
+      #ffffff calc(var(--star) + 14px)
+    );
+    -webkit-mask: url("/images/testimonials/stars.svg") no-repeat 0 0 / 100%
+      100%;
+    mask: url("/images/testimonials/stars.svg") no-repeat 0 0 / 100% 100%;
+    pointer-events: none;
+  }
+
+  .testimonials-dot {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+  }
+
+  /* ===================== Contact ===================== */
+  /* Figma: 1240 × 773 grey card, form 100px in from the left, illustration on the right
+   overflowing the card and clipped by its rounded edge. */
+  .contact-card {
+    position: relative;
+    min-height: 773px;
+    padding: 60px 100px 80px;
+    overflow: hidden;
+    background-color: var(--color-grey);
+    border-radius: 45px;
+  }
+
+  .contact-form {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 556px;
+    max-width: 100%;
+  }
+
+  .contact-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .contact-field label {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .contact-field input,
+  .contact-field textarea {
+    width: 100%;
+    padding: 18px 30px;
+    font-size: 18px;
+    line-height: normal;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 14px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Figma heights include the 1px border: 59px inputs, 190px message box. */
+  .contact-field input {
+    height: 59px;
+  }
+
+  .contact-field textarea {
+    height: 190px;
+    resize: vertical;
+  }
+
+  .contact-field input::placeholder,
+  .contact-field textarea::placeholder {
+    color: #898989; /* Figma placeholder grey, only used here */
+  }
+
+  .contact-field input:focus,
+  .contact-field textarea:focus {
+    border-color: var(--color-purple);
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(188 19 254 / 0.25);
+  }
+
+  .contact-actions {
+    position: relative;
+  }
+
+  /* 19px padding keeps the bordered button at Figma's 68px. */
+  .contact-submit {
+    width: 100%;
+    padding-top: 19px;
+    padding-bottom: 19px;
+  }
+
+  /* Sits in the card's bottom padding so it doesn't change the Figma height. */
+  .contact-status {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 0;
     font-size: 16px;
   }
 
-  .testimonial-author {
-    width: auto;
-    padding-left: 40px;
+  /* Illustration layers, positioned from the card's top-left corner (Figma values). */
+  .contact-art {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
   }
 
-  .testimonials-nav {
-    margin-top: 40px;
-    padding: 0 20px;
-  }
-}
-
-@media (max-width: 575px) {
-  /* AA DEV STUDIO mobile layout: title across the top, arrow link and illustration below it. */
-  .service-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-      "title title"
-      "link art";
-    align-items: end;
-    row-gap: 20px;
+  .contact-starburst {
+    position: absolute;
+    top: 62.5px;
+    left: 914.71px;
+    width: 649.922px;
+    height: 648.251px;
+    max-width: none;
   }
 
-  .service-card-title { grid-area: title; }
-  .service-link { grid-area: link; }
-
-  .service-art {
-    grid-area: art;
-    justify-self: end;
-    width: 170px;
-    max-width: 100%;
+  /* Each star is drawn upright in a box 1/√2 of its Figma frame and turned 45°. */
+  .contact-star {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-}
+
+  .contact-star img {
+    max-width: none;
+    transform: rotate(45deg);
+  }
+
+  .contact-star-purple {
+    top: 486.79px;
+    left: 943.71px;
+    width: 141.42px;
+    height: 141.42px;
+  }
+
+  .contact-star-purple img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .contact-star-dark {
+    top: 224.21px;
+    left: 1045.42px;
+    width: 252.71px;
+    height: 252.71px;
+  }
+
+  .contact-star-dark img {
+    width: 178.693px;
+    height: 178.693px;
+  }
+
+  /* ===================== Footer ===================== */
+  .footer-link {
+    font-size: 18px;
+    text-decoration: underline;
+    text-underline-position: from-font;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .footer-link:hover {
+    color: var(--color-purple);
+  }
+
+  /* ===================== Responsive ===================== */
+  @media (max-width: 1199px) {
+    .site-container {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    /* 32px offset at the top on smaller screens (17 + 15). */
+    .site-header {
+      margin-top: 17px;
+    }
+
+    .contact-card {
+      padding: 60px 40px 80px;
+    }
+
+    .tech-bar {
+      flex-basis: 96px;
+    }
+
+    .tech-bar-head {
+      width: 94px;
+    }
+
+    .tech-bar-number {
+      font-size: 32px;
+    }
+
+    .tech-bar-title {
+      font-size: 26px;
+    }
+
+    .cta-art {
+      right: 40px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .cta-card {
+      min-height: 0;
+      padding: 50px 40px;
+    }
+
+    .cta-art {
+      display: none;
+    }
+
+    .case-list {
+      grid-template-columns: 1fr;
+      row-gap: 41px;
+      padding: 50px 40px;
+    }
+
+    /* Stacked: the divider lies flat, centred in the 41px gap above each item. */
+    .case-item + .case-item::before {
+      top: -21px;
+      left: 0;
+      width: 100%;
+      transform: none;
+    }
+
+    .contact-card {
+      min-height: 0;
+    }
+
+    .contact-form {
+      width: 100%;
+    }
+
+    .contact-art {
+      display: none;
+    }
+
+    /* Stacked: bars become full-width rows that open downwards (grid 0fr → 1fr). */
+    .tech-bars {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .tech-bar,
+    .tech-bar.is-open {
+      flex: none;
+      flex-direction: column;
+    }
+
+    .tech-bar-head {
+      width: 100%;
+    }
+
+    .tech-bar-trigger {
+      flex-direction: row;
+      gap: 20px;
+      padding: 28px 40px;
+      text-align: left;
+    }
+
+    .tech-bar-title {
+      white-space: normal;
+      writing-mode: horizontal-tb;
+      transform: none;
+    }
+
+    .tech-bar-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition:
+        grid-template-rows 0.5s ease-in-out,
+        opacity 0.3s ease-in-out;
+    }
+
+    .tech-bar.is-open .tech-bar-panel {
+      grid-template-rows: 1fr;
+      transition-delay: 0s;
+    }
+
+    .tech-bar-panel-inner {
+      min-height: 0;
+      overflow: hidden;
+      padding: 0 40px;
+    }
+
+    .tech-bar.is-open .tech-bar-panel-inner {
+      padding-bottom: 32px;
+    }
+
+    /* Stacked bars have no fixed height, so give the heap its own. */
+    .tech-pile {
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .site-container {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .btn {
+      padding: 16px 28px;
+      font-size: 18px;
+    }
+
+    .logos-item {
+      padding-right: 56px;
+    }
+
+    .service-card {
+      padding: 30px;
+      border-radius: 30px;
+    }
+
+    .cta-card {
+      padding: 40px 30px;
+      border-radius: 30px;
+    }
+
+    .case-list {
+      padding: 40px 30px;
+      border-radius: 30px;
+    }
+
+    .accordion-item {
+      padding: 30px;
+      border-radius: 30px;
+    }
+
+    .accordion-label {
+      gap: 16px;
+    }
+
+    .accordion-number {
+      font-size: 30px;
+    }
+
+    .accordion-title {
+      font-size: 18px;
+    }
+
+    .accordion-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .team-card {
+      min-height: 0;
+      padding: 30px;
+      border-radius: 30px;
+    }
+
+    .contact-card {
+      padding: 40px 24px 70px;
+      border-radius: 30px;
+    }
+
+    .tech-bar {
+      border-radius: 30px;
+    }
+
+    .tech-bar-trigger {
+      padding: 22px 24px;
+    }
+
+    .tech-bar-number {
+      font-size: 26px;
+    }
+
+    .tech-bar-title {
+      font-size: 20px;
+    }
+
+    .tech-bar-panel-inner {
+      padding: 0 24px;
+    }
+
+    .tech-bar.is-open .tech-bar-panel-inner {
+      padding-bottom: 28px;
+    }
+
+    .tech-pile {
+      --ball-max: 58px;
+      height: 220px;
+    }
+
+    /* The message wraps on phones, so let it push the card taller instead of overflowing. */
+    .contact-status {
+      position: static;
+      margin-top: 16px;
+    }
+
+    /* Stays rendered (not display:none) so screen readers still announce the message. */
+    .contact-status:empty {
+      margin-top: 0;
+    }
+
+    .team-name {
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    /* Phones: the fixed 606 × 266 bubble asset can't stretch without distorting, so the
+     bubble becomes a bordered box with a CSS tail and grows with the quote. */
+    .testimonials-block {
+      padding: 40px 0;
+      border-radius: 30px;
+    }
+
+    .testimonials-slide {
+      width: calc(100% - 40px);
+      transform: translateX(calc(var(--offset) * (100% + 20px)));
+    }
+
+    .testimonial-card {
+      align-items: stretch;
+    }
+
+    .testimonial-bubble {
+      width: 100%;
+      height: auto;
+      margin-bottom: 18px;
+      padding: 30px 24px;
+      border: 1px solid var(--color-purple);
+      border-radius: 30px;
+    }
+
+    .testimonial-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -14px;
+      left: 50px;
+      width: 26px;
+      height: 26px;
+      background-color: var(--color-dark);
+      border-right: 1px solid var(--color-purple);
+      border-bottom: 1px solid var(--color-purple);
+      transform: rotate(45deg);
+    }
+
+    .testimonial-bubble-bg {
+      display: none;
+    }
+
+    .testimonial-quote {
+      position: static;
+      width: auto;
+      font-size: 16px;
+    }
+
+    .testimonial-author {
+      width: auto;
+      padding-left: 40px;
+    }
+
+    .testimonials-nav {
+      margin-top: 40px;
+      padding: 0 20px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    /* AA DEV STUDIO mobile layout: title across the top, arrow link and illustration below it. */
+    .service-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "title title"
+        "link art";
+      align-items: end;
+      row-gap: 20px;
+    }
+
+    .service-card-title {
+      grid-area: title;
+    }
+    .service-link {
+      grid-area: link;
+    }
+
+    .service-art {
+      grid-area: art;
+      justify-self: end;
+      width: 170px;
+      max-width: 100%;
+    }
+  }
 }
