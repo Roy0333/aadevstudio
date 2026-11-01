@@ -1,0 +1,378 @@
+{
+  "about": {
+    "heading": "About Us",
+    "text": "We are a group of the **best IT people**. When you hire an organization, you may not get the best individual talent in every role, but here you get **the best in all of them**. We intend to deliver our best on every project, so your **online presence keeps getting stronger**."
+  },
+  "services": {
+    "heading": "Services",
+    "intro": "We are an AI-first organization with real craftsmanship. We build your online presence, then enhance it with AI so your business can grow. Our services include:",
+    "items": [
+      {
+        "title": [
+          "Website",
+          "Development"
+        ],
+        "art": "seo",
+        "image": "/images/services/seo.png",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      },
+      {
+        "title": [
+          "AI Integration",
+          "& Automation"
+        ],
+        "art": "ppc",
+        "image": "/images/services/ppc.png",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      },
+      {
+        "title": [
+          "E-commerce",
+          "Solutions"
+        ],
+        "art": "social",
+        "image": "/images/services/social.png",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      },
+      {
+        "title": [
+          "UI/UX &",
+          "Web Design"
+        ],
+        "art": "email",
+        "image": "/images/services/email.png",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      },
+      {
+        "title": [
+          "SEO &",
+          "Performance"
+        ],
+        "art": "content",
+        "image": "/images/services/content.png",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      },
+      {
+        "title": [
+          "Analytics &",
+          "Growth"
+        ],
+        "art": "analytics",
+        "image": "/images/services/analytics.png",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      }
+    ]
+  },
+  "technologies": {
+    "heading": "Technologies We Work With",
+    "intro": "The languages, frameworks and tools our team uses every day to design, build and enhance your online presence",
+    "items": [
+      {
+        "title": "Website Development",
+        "icons": [
+          "html5",
+          "css",
+          "sass",
+          "tailwindcss",
+          "javascript",
+          "typescript",
+          "react",
+          "nextdotjs",
+          "nodedotjs",
+          "wordpress",
+          "bootstrap",
+          "php"
+        ]
+      },
+      {
+        "title": "UI/UX Design",
+        "icons": [
+          "figma",
+          "framer",
+          "sketch",
+          "webflow",
+          "elementor",
+          "shopify",
+          "woocommerce",
+          "gsap"
+        ]
+      },
+      {
+        "title": "Digital Growth",
+        "icons": [
+          "googleads",
+          "googleanalytics",
+          "googlesearchconsole",
+          "googletagmanager",
+          "meta",
+          "instagram",
+          "youtube",
+          "mailchimp",
+          "hubspot",
+          "semrush",
+          "hootsuite"
+        ]
+      },
+      {
+        "title": "Cloud & Dev Tools",
+        "icons": [
+          "git",
+          "github",
+          "docker",
+          "vercel",
+          "netlify",
+          "firebase",
+          "googlecloud",
+          "mongodb",
+          "mysql",
+          "postman",
+          "jira",
+          "python"
+        ]
+      }
+    ]
+  },
+  "cta": {
+    "heading": "Let’s build your presence",
+    "text": "Your idea deserves to reach millions. Tell us about it and we will build it with precision, enhance it with AI, and deliver with no extra charges and no extra time.",
+    "button": {
+      "label": "Get your free proposal",
+      "href": "#contact"
+    }
+  },
+  "caseStudies": {
+    "heading": "Case Studies",
+    "intro": "Real Projects Where Precise Engineering and AI Helped Businesses Grow",
+    "items": [
+      {
+        "text": "For a local restaurant, we built a fast, mobile-first website with online ordering and an AI chat assistant that answers customer questions around the clock.",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      },
+      {
+        "text": "For a B2B software company, we rebuilt their website in Next.js with a clean, search-ready structure, cutting page load times and lifting organic traffic.",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      },
+      {
+        "text": "For a national retail chain, we delivered an e-commerce store with AI-powered product recommendations that help shoppers find the right products faster.",
+        "link": {
+          "label": "Learn more",
+          "href": "#contact"
+        }
+      }
+    ]
+  },
+  "pricing": {
+    "heading": "Pricing",
+    "intro": "Everything starts from just ₹6,000. Simple, honest pricing with no hidden charges.",
+    "items": [
+      {
+        "title": "Website & Landing Page",
+        "from": "Starting from",
+        "price": "₹6,000",
+        "text": "A fast, modern website or landing page built with real craftsmanship to put your business online.",
+        "features": [
+          "Responsive, mobile-first design",
+          "Business websites and landing pages",
+          "SEO-ready structure",
+          "Contact forms and analytics setup"
+        ],
+        "button": {
+          "label": "Get started",
+          "href": "#contact"
+        }
+      },
+      {
+        "title": "Digital Marketing",
+        "from": "Starting from",
+        "price": "₹6,000",
+        "text": "Grow your reach and bring in more customers with marketing that is planned, measured and improved with AI.",
+        "features": [
+          "Social media marketing",
+          "Search engine optimization",
+          "Ad campaign setup",
+          "Performance reports"
+        ],
+        "button": {
+          "label": "Get started",
+          "href": "#contact"
+        }
+      },
+      {
+        "title": "Posts & UI Design",
+        "from": "Only",
+        "price": "₹600",
+        "unit": "/ template",
+        "text": "Eye-catching social media posts and clean UI designs that keep your brand looking sharp.",
+        "features": [
+          "Social media post designs",
+          "UI screens and templates",
+          "Brand-consistent visuals",
+          "Quick turnaround"
+        ],
+        "button": {
+          "label": "Get started",
+          "href": "#contact"
+        }
+      }
+    ],
+    "note": {
+      "title": "Need something else?",
+      "text": "For other services, contact us for pricing. We will quote based on your requirements.",
+      "button": {
+        "label": "Contact us",
+        "href": "#contact"
+      }
+    }
+  },
+  "faq": {
+    "heading": "Our Working Process",
+    "intro": "Precise Steps from Your Idea to a Growing Online Presence",
+    "items": [
+      {
+        "title": "Discovery and Consultation",
+        "content": "We start by understanding your idea, your business goals and your audience. This lets us shape a solution that fits your needs, with a clear scope, a fixed price and a firm timeline."
+      },
+      {
+        "title": "Planning and Design",
+        "content": "We plan the architecture and design every screen with care, so you see exactly what you are getting before a single line of code is written."
+      },
+      {
+        "title": "AI-Assisted Development",
+        "content": "Experienced engineers build your website or application with real craftsmanship, using AI to move faster and catch issues earlier. Every project is delivered on schedule."
+      },
+      {
+        "title": "Testing and Quality Assurance",
+        "content": "We value preciseness and perfection. Every page is tested across devices and browsers for speed, accessibility and security before it goes live."
+      },
+      {
+        "title": "Launch and Handover",
+        "content": "We deploy your project, set up hosting, analytics and tracking, and walk you through everything. No extra charges, no extra time, no surprises."
+      },
+      {
+        "title": "AI-Powered Enhancement",
+        "content": "Launch is only the start. We keep enhancing your presence with AI, from smart search and chat to content and performance improvements, so your business keeps growing."
+      }
+    ]
+  },
+  "team": {
+    "heading": "Team",
+    "intro": "Meet the experienced IT professionals who build and enhance every project with precision",
+    "items": [
+      {
+        "name": "John Smith",
+        "role": "CEO and Founder",
+        "bio": [
+          "10+ years of experience in software engineering and IT consulting. Leads our AI-first approach to web solutions"
+        ],
+        "linkedin": "https://www.linkedin.com",
+        "photo": {
+          "src": "/images/team/john-smith.png",
+          "width": 107,
+          "height": 161,
+          "x": -5,
+          "y": -14
+        }
+      },
+      {
+        "name": "Jane Doe",
+        "role": "Director of Operations",
+        "bio": [
+          "7+ years of experience in project management and team leadership. Keeps every project on time and on budget"
+        ],
+        "linkedin": "https://www.linkedin.com",
+        "photo": {
+          "src": "/images/team/jane-doe.png",
+          "width": 188,
+          "height": 125,
+          "x": -51,
+          "y": -6
+        }
+      },
+      {
+        "name": "Michael Brown",
+        "role": "Lead Full-Stack Developer",
+        "bio": [
+          "8+ years of experience building web applications. Expertise in React, Next.js, Node.js and cloud platforms"
+        ],
+        "linkedin": "https://www.linkedin.com",
+        "photo": {
+          "src": "/images/team/michael-brown.png",
+          "width": 208,
+          "height": 139,
+          "x": -84,
+          "y": 0
+        }
+      },
+      {
+        "name": "Emily Johnson",
+        "role": "AI Solutions Engineer",
+        "bio": [
+          "5+ years of experience in AI and machine learning. Skilled in chatbots, automation and LLM-powered features"
+        ],
+        "linkedin": "https://www.linkedin.com",
+        "photo": {
+          "src": "/images/team/emily-johnson.png",
+          "width": 284,
+          "height": 426,
+          "x": -88,
+          "y": -158
+        }
+      },
+      {
+        "name": "Brian Williams",
+        "role": "UI/UX Designer",
+        "bio": [
+          "6+ years of experience designing clean, accessible interfaces. Proficient in Figma, prototyping and design systems"
+        ],
+        "linkedin": "https://www.linkedin.com",
+        "photo": {
+          "src": "/images/team/brian-williams.jpg",
+          "width": 165,
+          "height": 247,
+          "x": -36,
+          "y": -45
+        }
+      },
+      {
+        "name": "Sarah Kim",
+        "role": "SEO & Performance Specialist",
+        "bio": [
+          "4+ years of experience in technical SEO and web performance",
+          "Skilled in Core Web Vitals, site audits and search-ready content"
+        ],
+        "linkedin": "https://www.linkedin.com",
+        "photo": {
+          "src": "/images/team/sarah-kim.jpg",
+          "width": 105,
+          "height": 105,
+          "x": -1,
+          "y": 0
+        }
+      }
+    ]
+  }
+}
