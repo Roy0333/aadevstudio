@@ -42,10 +42,10 @@ export default function Header() {
           <Image
             src="/images/aa-logo.png"
             alt="AA DEV STUDIO"
-            width={1604}
-            height={992}
+            width={100}
+            height={75}
             priority
-            className="h-[75px] w-auto scale-200 max-w-none"
+            className="h-[75px] w-auto"
           />
         </Link>
 
